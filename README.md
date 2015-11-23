@@ -25,3 +25,5 @@ Sieben
 acht
 
 neun
+
+zehn
