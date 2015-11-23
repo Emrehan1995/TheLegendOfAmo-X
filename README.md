@@ -21,3 +21,11 @@ Vier
 Fünf...
 
 Sieben
+
+acht
+
+neun
+
+zehn
+
+elf
