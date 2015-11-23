@@ -2564,6 +2564,7 @@
 		}
 
 		#header .logo {
+            /* Hintergrundfarbe des Logos ganz oben */
 			background: #4eb980;
 			border-radius: 100%;
 			color: #ffffff;
