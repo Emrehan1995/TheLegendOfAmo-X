@@ -2507,8 +2507,8 @@
 
 	#header {
 		background-attachment: scroll,							scroll,					fixed;
-		background-image: url("images/top-3200.svg"), url("images/overlay.png"), url("../../images/header.jpg");
-		background-position: bottom center,					top left,				center center;
+		background-image: url("images/top-3200.svg"), url("images/overlay.png"), url("../../images/space.jpg");
+		background-position: bottom center,					top left,				center left;
 		background-repeat: repeat-x,						repeat,					no-repeat;
 		background-size: 3200px 460px,					auto,					cover;
 		color: rgba(255, 255, 255, 0.8);
