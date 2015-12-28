@@ -150,3 +150,6 @@ GameEnd = ig.Game.extend({
 ig.main( '#canvas', OpenScreen, 60, 240, 160, 3 );
 
 });
+
+
+//Beste Kommentar ever
