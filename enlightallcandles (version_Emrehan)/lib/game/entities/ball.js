@@ -44,6 +44,9 @@ EntityBall = ig.Entity.extend({
 			ig.game.spawnEntity('EntityFlare', this.pos.x, this.pos.y, null );
 		}
 		
+		
+		
+		
 		this.parent();		
 	},
 	
@@ -59,6 +62,25 @@ EntityBall = ig.Entity.extend({
 	
 	check: function(other)
 	{
+		//Dieser Part muss in die Entität des Arms
+		var lpowerup = ig.game.getEntitiesByType(EntityPowerUp);
+        if (lpowerup[0] != undefined && this.touches(lpowerup[0])) {
+			var lhans = ig.game.getEntitiesByType( EntityHansChristian );
+			
+            //Ball Richtung Arm
+			
+			
+			//Power Up Richtung Arm
+			
+			//Nachdem angekommen:
+				//Effekt des PowerUps ausführen
+				lhans[0].money = lhans[0].money + 50; //Habe einfach mal ein Attribut von Amo-X manipuliert
+				console.log(lhans[0].money)
+				
+				//PowerUp und Arm-Entität killen
+				lpowerup[0].kill();
+				this.kill();
+        }
 		
 		//console.log("this.name="+this.name+" other.name="+other.name);
 		//other.kill();

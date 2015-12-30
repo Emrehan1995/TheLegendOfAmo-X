@@ -16,6 +16,7 @@ EntityHansChristian = ig.Entity.extend({
 	alivecounter:0,
 	spawnflare:0,
 	name:"hans",
+	money: 0,
 	
 	animSheet: new ig.AnimationSheet( 'media/hansChristian.png', 50, 50),
 	
@@ -65,12 +66,16 @@ EntityHansChristian = ig.Entity.extend({
 		{
 		
 			//other.kill();
-			this.kill();
+			//this.kill();
 			
 		}
 		
 		
-	}
+	},
+	
+	/* _increaseMoney: function( sum ) {
+		this.money == money+sum;
+	} */
 });
 
 });
