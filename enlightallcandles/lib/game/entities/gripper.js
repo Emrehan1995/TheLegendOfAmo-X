@@ -15,6 +15,7 @@ EntityGripper = ig.Entity.extend({
 	
 	animSheet: new ig.AnimationSheet( 'media/canon_damage.png', 40, 40),
 	
+	money: 0, //Muss in Amo-X Entität
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );
 		

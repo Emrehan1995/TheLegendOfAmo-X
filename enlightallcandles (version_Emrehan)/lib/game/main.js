@@ -12,7 +12,9 @@ ig.module(
     'game.entities.hansChristian',
 	'game.entities.ball',
 	'game.entities.kerze',
-	'game.entities.flare'
+	'game.entities.flare',
+	'game.entities.gripper',
+	'game.entities.powerUp'
 )
 .defines(function(){
 
@@ -30,6 +32,7 @@ MyGame = ig.Game.extend({
 		// Initialize your game here; bind keys etc.
 		ig.input.bind(ig.KEY.MOUSE1,'ire');
         ig.input.bind(ig.KEY.MOUSE1,'fire');
+		ig.input.bind(ig.KEY.MOUSE2,'grip');
 		ig.input.bind(ig.KEY.UP_ARROW,'up');
 		ig.input.bind(ig.KEY.DOWN_ARROW,'down');
 		ig.input.bind(ig.KEY.RIGHT_ARROW,'right');
