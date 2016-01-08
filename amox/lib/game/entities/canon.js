@@ -13,7 +13,9 @@ EntityCanon = ig.Entity.extend({
 	checkAgainst:ig.Entity.TYPE.B,
     currentDamageLevel: 0, //main.js just upgrades this attribute because the ball instances depend on this attribute
     name: 'canon',
-                   
+    reloadPeriod: 0.175,
+    shootTimer: new ig.Timer(0),
+
     //own defined properties
     font: new ig.Font('media/04b03.font.png'),
     message : 'No Ammunition left!',
@@ -59,7 +61,7 @@ EntityCanon = ig.Entity.extend({
                                },
 	update: function()
 	{
-                               console.log('Canon ' + this.currentDamageLevel);
+                               //console.log('Canon ' + this.currentDamageLevel);
 
 		if (ig.game.levelDone==false)
 		{
@@ -75,7 +77,9 @@ EntityCanon = ig.Entity.extend({
                 if( ig.input.pressed('fire') )//instead of state use pressed for single events
                 {
 				     var amox = ig.game.getEntitiesByType( EntityAmox )[0];
-                            if (amox.ammunition > 0)
+                    
+                               
+                            if ((amox.ammunition > 0) & (this.shootTimer.delta()>0))
                                {
                                     var angle=r;
                                
@@ -85,6 +89,7 @@ EntityCanon = ig.Entity.extend({
                                     newBall.vel.y=Math.sin(angle)*100;
                                
                                     amox.reduceAmmunition();
+                                    this.shootTimer.set(this.reloadPeriod);
                                }else{
                                console.log('no ammo left!');
                                }
