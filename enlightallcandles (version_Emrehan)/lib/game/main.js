@@ -1,4 +1,4 @@
-ig.module( 
+ig.module(
 	'game.main' 
 )
 .requires(
