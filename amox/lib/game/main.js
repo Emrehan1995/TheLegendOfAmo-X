@@ -4,7 +4,10 @@ ig.module(
 .requires(
     //Plugins
     'plugins.button',
+    'plugins.button2', //button while playing
     'plugins.balken',
+    'plugins.pause',
+          
     //Levels
 	'impact.game',
 	'impact.font',
@@ -33,9 +36,10 @@ ig.module(
 //Helpful global variables
 ig.global.coins = 9999;
 ig.global.level = 1;
-ig.global.levelCanon = 0;
-ig.global.levelGripper = 0;
-ig.global.levelArmor = 0;
+ig.global.levelCanon = 1;
+ig.global.levelGripper = 1;
+ig.global.levelArmor = 1;
+ig.global.pauseButtonPressed = false;
          
 
 MyGame = ig.Game.extend({
@@ -58,6 +62,7 @@ MyGame = ig.Game.extend({
 		ig.input.bind(ig.KEY.MOUSE2,'ire'); //4GripperArm
         ig.input.bind(ig.KEY.MOUSE1,'fire');
         ig.input.bind(ig.KEY.SPACE,'fire');
+        //ig.input.bind( ig.KEY.MOUSE1, 'click2' );
         //this.loadLevel(LevelFirst);
         this.startLevel(ig.global.level);
         if(this.amox != null){
@@ -76,9 +81,9 @@ MyGame = ig.Game.extend({
                         
                         }
                         
-//                        if(this.gripper != null){
-//                        this.gripper.currentGripperLevel = ig.global.levelGripper;
-//                        }
+                        if(this.gripper != null){
+                        this.gripper.currentGripperLevel = ig.global.levelGripper;
+                        }
 	},
 	
 	update: function() {
@@ -103,15 +108,23 @@ MyGame = ig.Game.extend({
                         }
                         ig.input.bind(ig.KEY.SPACE,'NextLevel');
         }
-        
+                        //console.log('Mouse X = ' + ig.input.mouse.x);
+                        //console.log('Mouse Y = ' + ig.input.mouse.y);
                         
+                        //Specify clickable Area of pause Button!
+                        if ( ig.input.state('fire' ) && (ig.input.mouse.x > 700 ) &  (ig.input.mouse.y < 70) ) {
+                        this.togglePause();
+                        //idea: getEntitiesByName('Pausebutton') & this current Animation oder ig.spawn new entity or in "onpressed" method of button
+                        }
+                
             
         if(ig.input.pressed('NextLevel')){
 			this.levelDone=false
 			ig.global.level=ig.global.level+1;
 			console.log("start the next level");
 			this.startLevel(ig.global.level);
-		}	
+		}
+                        
 	},
 	
 	startLevel:function(aLevel)
@@ -202,18 +215,118 @@ MyGame = ig.Game.extend({
                         if( window.myTouchButtons ) {
                         window.myTouchButtons.draw(); 
                         }
+                        //Edit Buttons
+                        var btnWidth = 50;
+                        var btnHeight  = 50;
+                        var textPosX = 25;
+                        var textPosY  = 15;
+                        
+                        //Mute Button
+                        ig.game.spawnEntity( Button2, ig.system.width - 175, 10, {
+                                            font: new ig.Font( 'media/04b03.font.png' ),
+                                            text: [ 'M' ],
+                                            textPos: { x: textPosX, y: textPosY },
+                                            textAlign: ig.Font.ALIGN.CENTER,
+                                            size: { x: btnWidth, y: btnHeight },
+                                            animSheet: new ig.AnimationSheet( 'media/button.png', btnWidth, btnHeight ),
+                                            
+                                            pressedDown: function() {
+                                            },
+                                            pressed: function() {
+                                            },
+                                            pressedUp: function() {
+                                            ig.system.setGame(MyGame);
+                                            }
+                                            
+                                            });
+                        //Pause Button
+                        ig.game.spawnEntity( Button2, ig.system.width - 100, 10, {
+                                            font: new ig.Font( 'media/04b03.font.png' ),
+                                            text: [ 'II' ],
+                                            textPos: { x: textPosX, y: textPosY },
+                                            textAlign: ig.Font.ALIGN.CENTER,
+                                            size: { x: btnWidth, y: btnHeight },
+                                            animSheet: new ig.AnimationSheet( 'media/button.png', btnWidth, btnHeight ),
+                                            
+                        
+                                            pressedDown: function() {
+                                            console.log('pressedDown')
+                                            
+                                            },
+                                            pressed: function() {
+                                            console.log('pressed')
+
+                                            },
+                                            pressedUp: function() {
+                                            //this.togglePause();
+                                            
+                                            }
+                                            
+                                            });
+                        
+
+                        
     }
-                    
+                       
                         
                         
 });
 
 OpenScreen = ig.Game.extend({
 	StartImage : new ig.Image('media/openscreen.jpg'),
-	init:function(){		
+	init:function(){
 		ig.input.bind(ig.KEY.SPACE,'LoadGame');
+        ig.input.bind( ig.KEY.MOUSE1, 'click' );
+                            //Edit Buttons
+                            var btnWidth = 200;
+                            var btnHeight  = 50;
+                            var textPosX = 100;
+                            var textPosY  = 15;
+                            
+                            
+                            ig.game.spawnEntity( Button, ig.system.width / 2 - 100, ig.system.height / 2, {
+                                                font: new ig.Font( 'media/04b03.font.png' ),
+                                                text: [ 'Play' ],
+                                                textPos: { x: textPosX, y: textPosY },
+                                                textAlign: ig.Font.ALIGN.CENTER,
+                                                size: { x: btnWidth, y: btnHeight },
+                                                animSheet: new ig.AnimationSheet( 'media/button.png', btnWidth, btnHeight ),
+                                                
+                                                pressedDown: function() {
+                                                },
+                                                pressed: function() {
+                                                },
+                                                pressedUp: function() {
+                                                ig.system.setGame(MyGame);
+                                                }
+                                                
+                                                });
+                            
+                            ig.game.spawnEntity( Button, ig.system.width / 2 - 100, ig.system.height / 2 + 100, {
+                                                font: new ig.Font( 'media/04b03.font.png' ),
+                                                text: [ 'Credits' ],
+                                                textPos: { x: textPosX, y: textPosY },
+                                                textAlign: ig.Font.ALIGN.CENTER,
+                                                size: { x: btnWidth, y: btnHeight },
+                                                animSheet: new ig.AnimationSheet( 'media/button.png', btnWidth, btnHeight ),
+                                                
+                                                pressedDown: function() {
+                                                },
+                                                pressed: function() {
+                                                },
+                                                pressedUp: function() {
+                                                }
+                                                
+                                                });
+                            
+                            
+                            
+
+                            
+                            
 	},
 	update:function(){
+        this.parent();
 		if(ig.input.pressed('LoadGame')){
 			ig.system.setGame(MyGame);
 		}
@@ -221,6 +334,8 @@ OpenScreen = ig.Game.extend({
 	draw: function(){
 		this.parent();
 		this.StartImage.draw(0,0);
+                            
+                            
 	}
 });
       

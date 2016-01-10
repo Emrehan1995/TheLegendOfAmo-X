@@ -13,6 +13,7 @@ EntityAmox = ig.Entity.extend({
 	checkAgainst:ig.Entity.TYPE.B,
 	health:3,
     maxHealth: 3,
+    ignorePause: true,
     name: 'amox',
     
 
@@ -29,13 +30,17 @@ EntityAmox = ig.Entity.extend({
     deathMessage : 'You are Dead!',
     coins: 0,
 	
-	animSheet: new ig.AnimationSheet( 'media/amox.png', 50, 50),
+	animSheet: new ig.AnimationSheet( 'media/AmoxBodies.png', 70, 130),
 	
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );
         //this.armor = currentArmorLevel;
-		this.addAnim( 'idle0', 1, [0] );
-		this.currentAnim=this.anims.idle0;
+		this.addAnim( 'level0', 1, [0] );
+        this.addAnim( 'level1', 1, [1] );
+        this.addAnim( 'level2', 1, [2] );
+        this.addAnim( 'level3', 1, [3] );
+                              
+		this.currentAnim=this.anims.level0;
         this.armor = this.currentArmorLevel;
 		this.sound = new ig.Sound('media/soundbible.com/Glass_Break-stephan_schutze-958181291.ogg');
 		this.sound.volume = 1;
@@ -68,6 +73,23 @@ EntityAmox = ig.Entity.extend({
 	{
                               
 		this.parent();
+                              switch(this.currentArmorLevel){
+                              case 0:
+                              this.currentAnim=this.anims.level0;
+                              break;
+                              case 1:
+                              this.currentAnim=this.anims.level1;
+                              break;
+                              case 2:
+                              this.currentAnim=this.anims.level2;
+                              break;
+                              case 3:
+                              this.currentAnim=this.anims.level3;
+                              break;
+                              default:
+                              break;
+                              
+                              }
 		
 	},
             

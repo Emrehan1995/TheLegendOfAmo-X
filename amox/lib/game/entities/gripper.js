@@ -22,14 +22,18 @@ EntityGripper = ig.Entity.extend({
     message : 'No Ammunition left!',
     coins: 5,
     //amox: ig.game.getEntitiesByType( EntityAmox )[0],
-	
-	animSheet: new ig.AnimationSheet( 'media/gripperv2.png', 120, 30),
+    currentGripperLevel: 0,
+	animSheet: new ig.AnimationSheet( 'media/grippers.png', 120, 30),
 	
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );
 		
-		this.addAnim( 'idle0', 1, [0] );
-        this.currentAnim=this.anims.idle0;
+                                 this.addAnim( 'level0', 1, [0] );
+                                 this.addAnim( 'level1', 1, [1] );
+                                 this.addAnim( 'level2', 1, [2] );
+                                 this.addAnim( 'level3', 1, [3] );
+
+        this.currentAnim=this.anims.level0;
 		
 		this.sound = new ig.Sound('media/soundbible.com/Glass_Break-stephan_schutze-958181291.ogg');
 		this.sound.volume = 1;
@@ -61,22 +65,24 @@ EntityGripper = ig.Entity.extend({
                 var r = Math.atan2(my-this.pos.y, mx-this.pos.x); //Gives angle in radians from player's location to the mouse location, assuming directly right is 0
                 this.currentAnim.angle=r;
                 
-//                if( ig.input.pressed('fire') )//instead of state use pressed for single events
-//                {
-//				
-//                            if (this.ammunition > 0)
-//                               {
-//                                    var angle=this.currentAnim.angle;
-//                                    var newBall=ig.game.spawnEntity('EntityBall', this.pos.x+20+Math.cos(angle)*20, this.pos.y+20+Math.sin(angle)*20, null );
-//                                    newBall.vel.x=Math.cos(angle)*100;
-//                                    newBall.vel.y=Math.sin(angle)*100;
-//                                    this.ammunition--;
-//                                    console.log(this.ammunition);
-//                               }else{
-//                               console.log('no ammo left!');
-//                               }
-//				
-//			     }
+                                 switch(this.currentGripperLevel){
+                                 case 0:
+                                 this.currentAnim=this.anims.level0;
+                                 break;
+                                 case 1:
+                                 this.currentAnim=this.anims.level1;
+                                 break;
+                                 case 2:
+                                 this.currentAnim=this.anims.level2;
+                                 break;
+                                 case 3:
+                                 this.currentAnim=this.anims.level3;
+                                 break;
+                                 default:
+                                 break;
+                                 
+                                 }
+
            
 		}
                                

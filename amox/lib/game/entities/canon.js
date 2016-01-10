@@ -9,8 +9,8 @@ ig.module(
 EntityCanon = ig.Entity.extend({
 	
 	size: {x:30, y:30},
-    type:ig.Entity.TYPE.A,
-	checkAgainst:ig.Entity.TYPE.B,
+    //type:ig.Entity.TYPE.A,
+	//checkAgainst:ig.Entity.TYPE.B,
     currentDamageLevel: 0, //main.js just upgrades this attribute because the ball instances depend on this attribute
     name: 'canon',
     reloadPeriod: 0.175,
@@ -20,7 +20,7 @@ EntityCanon = ig.Entity.extend({
     font: new ig.Font('media/04b03.font.png'),
     message : 'No Ammunition left!',
 	
-	animSheet: new ig.AnimationSheet( 'media/canonv2.png', 120, 30),
+	animSheet: new ig.AnimationSheet( 'media/canons.png', 120, 20),
 	
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );
@@ -31,22 +31,13 @@ EntityCanon = ig.Entity.extend({
                               
                            
                                
-                               this.addAnim( 'idle0', 1, [0] );
-                               this.currentAnim=this.anims.idle0;
+                               this.addAnim( 'level0', 1, [0] );
+                               this.addAnim( 'level1', 1, [1] );
+                               this.addAnim( 'level2', 1, [2] );
+                               this.addAnim( 'level3', 1, [3] );
+                               this.currentAnim=this.anims.level0;
 
-                               //for different stylesheets:
-                               switch(this.currentDamageLevel){
-                               case 0:
-                               break;
-                               case 1:
-                               break;
-                               case 2:
-                               break;
-                               case 3:
-                               break;
-                               default:
-                               }
-                               // Set a reference to the player on the game instance
+                                                              // Set a reference to the player on the game instance
                                ig.game.canon = this;
    	},
 	
@@ -71,7 +62,8 @@ EntityCanon = ig.Entity.extend({
                                
                 var mx = (ig.input.mouse.x + ig.game.screen.x); //Figures out the x coord of the mouse in the entire world
                 var my = (ig.input.mouse.y + ig.game.screen.y); //Figures out the y coord of the mouse in the entire world
-                var r = Math.atan2(my-(this.pos.y+15), mx-(this.pos.x+60)); //Gives angle in radians from player's location to the mouse location, assuming directly right is 0
+                var r = Math.atan2(my-(this.pos.y+15), mx-(this.pos.x+60));
+                var r = Math.atan2(my-(this.pos.y), mx-(this.pos.x));//Gives angle in radians from player's location to the mouse location, assuming directly right is 0
                 this.currentAnim.angle=r;
                 
                 if( ig.input.pressed('fire') )//instead of state use pressed for single events
@@ -83,10 +75,11 @@ EntityCanon = ig.Entity.extend({
                                {
                                     var angle=r;
                                
-                               var newBall=ig.game.spawnEntity('EntityBall', this.pos.x+60+Math.cos(angle)*70, this.pos.y+10+Math.sin(angle)*70, {currentDamageLevel:this.currentDamageLevel} );
+                               var newBall=ig.game.spawnEntity('EntityBall', this.pos.x + 40 + Math.cos(angle)*80, this.pos.y+Math.sin(angle)*80, {currentDamageLevel:this.currentDamageLevel} );
                                
                                     newBall.vel.x=Math.cos(angle)*100;
                                     newBall.vel.y=Math.sin(angle)*100;
+                                    newBall.currentAnim.angle= angle;
                                
                                     amox.reduceAmmunition();
                                     this.shootTimer.set(this.reloadPeriod);
@@ -97,6 +90,25 @@ EntityCanon = ig.Entity.extend({
 			     }
            
 		}
+                               
+                               switch(this.currentDamageLevel){
+                               case 0:
+                               this.currentAnim=this.anims.level0;
+                               break;
+                               case 1:
+                               this.currentAnim=this.anims.level1;
+                               break;
+                               case 2:
+                               this.currentAnim=this.anims.level2;
+                               break;
+                               case 3:
+                               this.currentAnim=this.anims.level3;
+                               break;
+                               default:
+                               break;
+                               
+                               }
+
                                
 		this.parent();
 		

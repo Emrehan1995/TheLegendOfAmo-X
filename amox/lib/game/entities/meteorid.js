@@ -28,7 +28,7 @@ EntityMeteorid = EntityEnemy.extend({
         //var amox = ig.game.getEntitiesByType( EntityAmox )[0];
                                        
         var xtarget = 0;
-                                       xtarget = ig.system.width/2;
+        xtarget = ig.system.width/2;
         var ytarget = 0;
         ytarget = ig.system.height/2;
         //make them move
