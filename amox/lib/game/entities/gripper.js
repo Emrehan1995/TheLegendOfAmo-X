@@ -21,7 +21,7 @@ EntityGripper = ig.Entity.extend({
     damage: 0, //damage TAKEN!
     message : 'No Ammunition left!',
     coins: 5,
-    //amox: ig.game.getEntitiesByType( EntityAmox )[0],
+    duration: 5,
     currentGripperLevel: 0,
 	animSheet: new ig.AnimationSheet( 'media/grippers.png', 120, 30),
 	
@@ -84,7 +84,67 @@ EntityGripper = ig.Entity.extend({
                                  }
 
            
+                                 if( ig.input.pressed('grip') )//instead of state use pressed for single events
+                                 {
+                                 var angle=this.currentAnim.angle;
+                                 
+                                 //Erstelle Arm
+                                 var newArm = new Array();
+                                 newArm[0]=ig.game.spawnEntity('EntityArm', ig.input.mouse.x, ig.input.mouse.y, null );
+                                 newArm[0].vel.x=0;
+                                 newArm[0].vel.y=0;
+                                 
+                                 var distanz=this.distanceTo(newArm[0]);
+                                 newArm[0].kill();
+                                 for( var i = 0; i < distanz; i++) {
+                                 var dies = this;
+                                 var create = function(i) {
+                                 return function() {
+                                 
+                                 
+                                 newArm[i]=ig.game.spawnEntity('EntityArm', dies.pos.x+5+Math.cos(angle)*i, dies.pos.y+5+Math.sin(angle)*i, null );
+                                 
+                                 //Bewege Hand
+                                 var hand = ig.game.getEntitiesByType( EntityHand );
+                                 hand[0].pos.x = dies.pos.x+20+Math.cos(angle)*i*1.1;
+                                 hand[0].pos.y = dies.pos.y+20+Math.sin(angle)*i*1.1;
+                                 }
+                                 };
+                                 setTimeout(create(i), this.duration * i);
+                                 }
+                                 
+                                 //Lösche Arm
+                                 setTimeout(function() {
+                                            var oldArm = ig.game.getEntitiesByType( EntityArm );
+                                            for( var i = oldArm.length-1; i >= 0 ; i--) {
+                                            var tmp = oldArm.length - 1 - i;
+                                            var clear = function(i) {
+                                            return function() {
+                                            
+                                            oldArm[i].kill();
+                                    
+                                            //Bewege Hand
+                                            var handpos = function() {
+                                            return function() {
+                                            var hand = ig.game.getEntitiesByType( EntityHand );
+                                            hand[0].pos.x = dies.pos.x+20+Math.cos(angle)*i;
+                                            hand[0].pos.y = dies.pos.y+20+Math.sin(angle)*i;
+                                            }
+                                            };
+                                            setTimeout(handpos(), this.duration * tmp);
+                                            }
+                                            };
+                                            setTimeout(clear(i), this.duration * tmp);
+                                            }
+                                            }, (this.duration + 0) * i);
+                                 
+                                 
+                                 
+                                 }
+                                 
 		}
+                                 
+                                 
                                
 		this.parent();
 		

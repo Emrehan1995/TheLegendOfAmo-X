@@ -68,6 +68,16 @@ EntityAmox = ig.Entity.extend({
                               this.ammunition--;
                               //console.log(this.ammunition);
                               },
+                              
+                              increaseAmmunition: function(i)
+                              {
+                              if((this.ammunition + i) <= 30)
+                              this.ammunition += i;
+                              else
+                              this.ammunition = 30;
+                              },
+
+                              
 
 	update: function()
 	{

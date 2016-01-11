@@ -16,7 +16,6 @@ ig.module(
 	'game.levels.third',
 	'game.levels.fourth',
           
-          
     //add Enemy Entities:
     'game.entities.enemy',
     'game.entities.meteorid',
@@ -29,7 +28,17 @@ ig.module(
     'game.entities.amox',
     'game.entities.gripper',
 	'game.entities.ball',
-    'game.entities.flare'
+    'game.entities.flare',
+    'game.entities.arm',
+    'game.entities.hand',
+          
+    //add PowerUp Entities
+    'game.entities.powerUp',
+    'game.entities.atomBomb',
+    'game.entities.fullammu',
+    'game.entities.ammunition',
+    'game.entities.freeze'
+    
 )
 .defines(function(){
 
@@ -59,8 +68,10 @@ MyGame = ig.Game.extend({
     
 	init: function() {
 		// Initialize your game here; bind keys etc.
-		ig.input.bind(ig.KEY.MOUSE2,'ire'); //4GripperArm
+		ig.input.bind(ig.KEY.MOUSE2,'grip'); //4GripperArm
         ig.input.bind(ig.KEY.MOUSE1,'fire');
+        ig.input.bind(ig.KEY.X,'grip');
+        ig.input.bind(ig.KEY.C,'fire');
         ig.input.bind(ig.KEY.SPACE,'fire');
         //ig.input.bind( ig.KEY.MOUSE1, 'click2' );
         //this.loadLevel(LevelFirst);

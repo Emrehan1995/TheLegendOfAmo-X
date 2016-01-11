@@ -19,6 +19,11 @@ EntityEnemy = ig.Entity.extend({
 	animSheet: new ig.AnimationSheet( 'media/hansChristian.png', 50, 50 ),
     maxVel: { x: 50, y: 50 },
     speed: 25,
+    
+    //for the freeze powerup
+    stop: false,
+    //for killmethod of UFO
+    atomb: false,
 
 
                                        
@@ -68,7 +73,30 @@ EntityEnemy = ig.Entity.extend({
 //                               this.currentAnim.angle = angle;
                                }
                                
+                               
+                               if(this.stop) {
+                               var x = this.vel.x;
+                               var y = this.vel.y;
+                               
+                               this.vel.x = 0;
+                               this.vel.y = 0;
+                               
+                               var dies = this;
+                               setTimeout(function() {
+                                          
+                                          dies.vel.x = x;
+                                          dies.vel.y = y;
+                                          this.stop = false;
+                                          }, 3000); 
+                               }
+
+                               
                                },
+                               
+                               freezeEnemy: function() {
+                               this.stop = true;
+                               },
+
                                
     //obsolete method - not in use anymore
     moveTowardsAmox: function(){ //include in the update method of all classes! except UFO

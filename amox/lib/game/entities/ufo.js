@@ -43,6 +43,13 @@ EntityUfo = EntityEnemy.extend({
         this.vel.x = xdir;
         this.vel.y = ydir;
         },
+                               
+                               freezeEnemy: function() {
+                               this.stop = true;
+                               if(this.timer<0){
+                               this.init = false;
+                               }
+                               },
         
                                update: function()
                                {
@@ -79,13 +86,14 @@ EntityUfo = EntityEnemy.extend({
                                },
      
         kill: function(){
-                               if(this.killed == true){
+                               if(this.killed == true & !this.atomb){
                                ig.game.spawnEntity('EntityAlien', this.pos.x+20, this.pos.y+20, null );
                                ig.game.spawnEntity('EntityAlien', this.pos.x+20, this.pos.y+20, null );
                                this.parent(10); //how many coins per Kill? --> 5!
                                }else{
                                 this.parent(10); //how many coins per Kill? --> 5!
                                }
+                               
         }
                                
         
