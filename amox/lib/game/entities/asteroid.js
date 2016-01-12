@@ -51,6 +51,7 @@ EntityAsteroid = EntityEnemy.extend({
         },
                                 
             kill: function(){
+                    ig.game.spawnEntity( EntityExplosion2, this.pos.x + (this.size.x/2), this.pos.y + (this.size.y/2));
                     this.parent(5); //how many coins per Kill? --> 5!
                                     }
 });

@@ -7,6 +7,8 @@ ig.module(
     'plugins.button2', //button while playing
     'plugins.balken',
     'plugins.pause',
+    'game.entities.explosion',
+    'game.entities.explosion2',
           
     //Levels
 	'impact.game',
@@ -45,9 +47,9 @@ ig.module(
 //Helpful global variables
 ig.global.coins = 9999;
 ig.global.level = 1;
-ig.global.levelCanon = 1;
-ig.global.levelGripper = 1;
-ig.global.levelArmor = 1;
+ig.global.levelCanon = 0;
+ig.global.levelGripper = 0;
+ig.global.levelArmor = 0;
 ig.global.pauseButtonPressed = false;
          
 

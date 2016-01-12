@@ -52,6 +52,7 @@ EntityAlien = EntityEnemy.extend({
 
                                  
     kill: function(){
+        ig.game.spawnEntity( EntityExplosion, this.pos.x + (this.size.x/2), this.pos.y + (this.size.y/2));
         this.parent(2); //how many coins per Kill? --> 5!
     }
 });

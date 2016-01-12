@@ -86,6 +86,7 @@ EntityGripper = ig.Entity.extend({
            
                                  if( ig.input.pressed('grip') )//instead of state use pressed for single events
                                  {
+                                 
                                  var angle=this.currentAnim.angle;
                                  
                                  //Erstelle Arm
@@ -96,6 +97,7 @@ EntityGripper = ig.Entity.extend({
                                  
                                  var distanz=this.distanceTo(newArm[0]);
                                  newArm[0].kill();
+                                 
                                  for( var i = 0; i < distanz; i++) {
                                  var dies = this;
                                  var create = function(i) {

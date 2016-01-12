@@ -55,6 +55,7 @@ EntityMeteorid = EntityEnemy.extend({
                                     },
                                     
         kill: function(){
+        ig.game.spawnEntity( EntityExplosion, this.pos.x + (this.size.x), this.pos.y + (this.size.y));
            this.parent(3); //how many coins per Kill? --> 5!
                                     }
 	});
